@@ -11,6 +11,8 @@ Fighter.SPRITES = {
       height : 85,
       ticksPerFrame : 8,
       numberOfFrames : 4,
+      originX : 22,
+      originY : 85,
     },
     WALKING : {
       x : 0,
@@ -19,6 +21,8 @@ Fighter.SPRITES = {
       height : 85,
       ticksPerFrame : 5,
       numberOfFrames : 5,
+      originX : 22,
+      originY : 85,
     }
   },
 };

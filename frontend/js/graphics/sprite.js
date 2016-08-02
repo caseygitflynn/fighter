@@ -7,7 +7,7 @@ Fighter.Sprite = function (spriteData) {
 
   this.frameIndex = 0;
   this.tickCount = 0;
-  
+
   this.setSpriteData(spriteData);
 };
 
@@ -18,6 +18,8 @@ Fighter.Sprite.prototype.setSpriteData = function (spriteData) {
   this.tickCount = 0;
   this.x = spriteData.x || 0;
   this.y = spriteData.y || 0;
+  this.originX = spriteData.originX !== undefined ? spriteData.originX : Math.floor(this.width / 2);
+  this.originY = spriteData.originY !== undefined ? spriteData.originY : Math.floor(this.height / 2);
   this.ticksPerFrame = spriteData.ticksPerFrame || 0,
   this.numberOfFrames = spriteData.numberOfFrames || 1;
 };
@@ -39,8 +41,18 @@ Fighter.Sprite.prototype.getFrame = function (frame) {
   return this.frameIndex * this.width + this.x;
 };
 
-Fighter.Sprite.prototype.draw = function (ctx) {
+Fighter.Sprite.prototype.draw = function (pos, ctx, flip) {
+  flip = flip || false;
+
+  var canvasPos = Fighter.Utils.worldToCanvas(pos);
+
   ctx.save();
-  ctx.drawImage(this.image, this.getFrame(), this.y, this.width, this.height, 0, 0, this.width, this.height);
+  {
+    ctx.translate(Math.floor(canvasPos.x), Math.floor(canvasPos.y));
+    if (flip) {
+      ctx.scale(-1, 1);
+    }
+    ctx.drawImage(this.image, this.getFrame(), this.y, this.width, this.height, -this.originX, -this.originY, this.width, this.height);
+  }
   ctx.restore();
 };

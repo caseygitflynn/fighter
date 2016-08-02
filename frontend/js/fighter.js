@@ -1,3 +1,4 @@
+//=require utils/*.js
 //=require assets/*.js
 //=require core/*.js
 //=require graphics/*.js

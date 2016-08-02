@@ -21,7 +21,7 @@ Fighter.Game = function (canvas) {
   this.input = new Fighter.Input();
 
   this.world = new Fighter.World();
-  this.character = new Fighter.Character(Fighter.SPRITES.RYU, Fighter.WIDTH / 2, 0);
+  this.character = new Fighter.Character(Fighter.SPRITES.RYU, Fighter.WIDTH / 2, Fighter.HEIGHT);
 
   this.loop();
 };

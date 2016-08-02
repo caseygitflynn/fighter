@@ -17,7 +17,7 @@ Fighter.Character = function (spriteData, x, y) {
   };
   this.acc = {
     x : 0,
-    y : 0.8,
+    y : -0.8,
   };
   this.dir = 1;
 
@@ -70,26 +70,26 @@ Fighter.Character.prototype.handleInput = function (input) {
 };
 
 Fighter.Character.prototype.handleWorldCollisions = function (bounds) {
-  if (this.pos.x - (this.bounds.width / 2) <= 0) {
+  if (Fighter.Utils.leftEdge(this) <= 0) {
     this.pos.x = (this.bounds.width / 2);
   }
-  if (this.pos.x + (this.bounds.width / 2) > bounds.width) {
+  if (Fighter.Utils.rightEdge(this) >= bounds.width) {
     this.pos.x = bounds.width - (this.bounds.width / 2);
   }
-  if (this.pos.y + (this.bounds.height / 2) >= bounds.height) {
-    this.pos.y = bounds.height - (this.bounds.height / 2);
+  if (this.pos.y <= 0) {
+    this.pos.y = 0;
   }
 };
 
 Fighter.Character.prototype.draw = function (ctx) {
   ctx.save();
   {
-    ctx.translate(Math.floor(this.pos.x - (this.sprite.width / 2)), Math.floor(this.pos.y - (this.sprite.height / 2)));
-    if (this.dir === -1) {
-      ctx.translate(this.sprite.width, 0);
-      ctx.scale(-1, 1);
-    }
-    this.sprite.draw(ctx);
+      this.sprite.draw(this.pos, ctx, (this.dir === -1));
+      ctx.strokeStyle = "#FF0000";
+      ctx.lineWidth = 1;
+      var canvasPos = Fighter.Utils.worldToCanvas(this.pos);
+      ctx.translate(canvasPos.x, canvasPos.y);
+      ctx.strokeRect(-(this.bounds.width / 2), -this.bounds.height, this.bounds.width, this.bounds.height);
   }
   ctx.restore();
 };
