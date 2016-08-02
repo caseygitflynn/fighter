@@ -1,11 +1,8 @@
 (function () {
-  var canvas = document.querySelector('canvas');
-  var ctx = canvas.getContext('2d');
-  ctx.save();
-  {
-    ctx.fillStyle = "#888888";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }
-  ctx.restore();
 
+  var canvas = document.querySelector('canvas');
+  Fighter.Assets.loadImage('img/sprites.png', 'sprites', function (image) {
+    var game = new Fighter.Game(canvas);
+  });
+  
 }());
