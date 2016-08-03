@@ -3,10 +3,16 @@
 var Fighter = Fighter || {};
 
 Fighter.KEYS = {
-  UP    : 38,
-  DOWN  : 40,
-  LEFT  : 37,
-  RIGHT : 39,
+  L_KICK   : 65,
+  M_KICK   : 83,
+  H_KICK   : 68,
+  L_PUNCH  : 81,
+  M_PUNCH  : 87,
+  H_PUNCH  : 69,
+  JUMP     : 38,
+  CROUCH   : 40,
+  BLOCK : 37,
+  FORWARD  : 39,
 };
 
 Fighter.Input = function () {
