@@ -3,16 +3,16 @@
 var Fighter = Fighter || {};
 
 Fighter.KEYS = {
-  L_KICK   : 65,
-  M_KICK   : 83,
-  H_KICK   : 68,
-  L_PUNCH  : 81,
-  M_PUNCH  : 87,
-  H_PUNCH  : 69,
-  JUMP     : 38,
-  CROUCH   : 40,
-  BLOCK : 37,
-  FORWARD  : 39,
+  38 : "^", // UP
+  40 : "V", // DOWN
+  39 : ">", // RIGHT
+  37 : "<", // LEFT
+  69 : "L", // HIGH PUNCH
+  87 : "X", // MIDDLE PUNCH
+  81 : "Y", // LOW PUNCH
+  68 : "R", // HIGH KICK
+  83 : "A", // MIDDLE KICK
+  65 : "B", // LOW KICK
 };
 
 Fighter.Input = function () {
@@ -36,7 +36,7 @@ Fighter.Input.prototype._onKeyDown = function (e) {
     }
 
     this.pressedKeys[keyCode] = true;
-    this.keyDown(keyCode);
+    this.keyDown(Fighter.KEYS[keyCode]);
   }
 };
 
@@ -51,20 +51,12 @@ Fighter.Input.prototype._onKeyUp = function (e) {
     }
 
     this.pressedKeys[keyCode] = false;
-    this.keyUp(keyCode);
+    this.keyUp(Fighter.KEYS[keyCode]);
   }
 };
 
 Fighter.Input.prototype._isAssigned = function (keyCode) {
-  for (var key in Fighter.KEYS) {
-      if (Fighter.KEYS.hasOwnProperty(key)) {
-        if (keyCode == Fighter.KEYS[key]) {
-          return true;
-        }
-      }
-  }
-
-  return false;
+  return Fighter.KEYS.hasOwnProperty(keyCode);
 };
 
 Fighter.Input.prototype.keyDown = function (key) {

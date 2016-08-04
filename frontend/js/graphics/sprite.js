@@ -4,10 +4,6 @@ var Fighter = Fighter || {};
 
 Fighter.Sprite = function (spriteData) {
   this.image = Fighter.Assets.image('sprites');
-
-  this.frameIndex = 0;
-  this.tickCount = 0;
-
   this.setSpriteData(spriteData);
 };
 
@@ -16,8 +12,10 @@ Fighter.Sprite.prototype.setSpriteData = function (spriteData) {
   this.height = spriteData.height;
   this.frameIndex = 0;
   this.tickCount = 0;
+  this.loopable = spriteData.loopable || false;
   this.frames = spriteData.frames;
   this.numberOfFrames = this.frames.length;
+  this.done = this.loopable || true;
 };
 
 Fighter.Sprite.prototype.update = function () {
@@ -28,7 +26,11 @@ Fighter.Sprite.prototype.update = function () {
     if (this.frameIndex < this.numberOfFrames - 1) {  
       this.frameIndex += 1;
     } else {
-      this.frameIndex = this.numberOfFrames - 1;
+      if (this.loopable) {
+        this.frameIndex = 0;
+      } else {
+        this.done = true;
+      }
     }
   }
 };

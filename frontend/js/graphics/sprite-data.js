@@ -5,6 +5,7 @@ var Fighter = Fighter || {};
 Fighter.SPRITES = {
   RYU : {
     IDLE : {
+      loopable : true,
       frames : [
         { x : 0,    y : 0, width : 45, height : 85, originX : 22, originY : 85, duration: 8 },
         { x : 45,   y : 0, width : 45, height : 85, originX : 22, originY : 85, duration: 8 },
@@ -24,12 +25,27 @@ Fighter.SPRITES = {
       ],
     },
     WALKING : {
+      loopable : true,
       frames : [
         { x : 0,    y : 85, width : 45, height : 85, originX : 22, originY : 85, duration: 5 },
         { x : 45,   y : 85, width : 45, height : 85, originX : 22, originY : 85, duration: 5 },
         { x : 90,   y : 85, width : 45, height : 85, originX : 22, originY : 85, duration: 5 },
         { x : 135,  y : 85, width : 45, height : 85, originX : 22, originY : 85, duration: 5 },
         { x : 180,  y : 85, width : 45, height : 85, originX : 22, originY : 85, duration: 5 },
+      ],
+    },
+    F_L_PUNCH : {
+      frames : [
+        { x : 0,    y : 685, width : 45, height : 90, originX : 22, originY : 90, duration: 3 },
+        { x : 48,   y : 685, width : 47, height : 90, originX : 22, originY : 90, duration: 3 },
+        { x : 101,  y : 685, width : 45, height : 90, originX : 22, originY : 90, duration: 3 },
+      ],
+    },
+    CROUCH_L_PUNCH : {
+      frames : [
+        { x : 0,    y : 780, width : 49, height : 55, originX : 22, originY : 55, duration: 3 },
+        { x : 52,   y : 780, width : 63, height : 55, originX : 22, originY : 55, duration: 3 },
+        { x : 118,  y : 780, width : 50, height : 55, originX : 22, originY : 55, duration: 3 },
       ],
     },
     L_PUNCH : {

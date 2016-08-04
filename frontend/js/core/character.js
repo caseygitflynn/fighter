@@ -3,9 +3,9 @@
 var Fighter = Fighter || {};
 
 Fighter.IDLE = 0;
-Fighter.FORWARD = 1;
+Fighter.FORWARDS = 1;
 Fighter.JUMPING = 2;
-Fighter.BLOCKING = 3;
+Fighter.BACKWARDS = 3;
 Fighter.CROUCHING = 4;
 
 Fighter.Character = function (spriteData, x, y) {
@@ -42,82 +42,63 @@ Fighter.Character.prototype.update = function () {
   this.sprite.update();
 };
 
-Fighter.Character.prototype.handleInput = function (input) {
+Fighter.Character.prototype.handleInput = function (move) {
   var newSprite = this.currentSprite;
 
-  // if (input[Fighter.KEYS.BLOCK]) {
-  //   this.vel.x = 0;
-  //   this.state = Fighter.BLOCKING;
-  //   newSprite = this.spriteData.BLOCK;
-    
-  // } else if (input[Fighter.KEYS.FORWARD]) {
-  //   this.vel.x = 2;
-  //   newSprite = this.spriteData.WALKING;
-  //   this.state = Fighter.IDLE;
-  // } else {
-  //   this.vel.x = 0;
-  //   newSprite = this.spriteData.IDLE;
-  //   this.state = Fighter.IDLE;
-  // }
+  if (!move) {
+    this.state = Fighter.IDLE;
+    this.vel.x = 0;
+    newSprite = this.spriteData.IDLE;
+  } else {
+    switch (this.state) {
+      case Fighter.IDLE :
+        this.vel.x = 0;
+        newSprite = this.spriteData.IDLE;
 
-  switch (this.state) {
-    case Fighter.IDLE :
-      this.vel.x = 0;
-      newSprite = this.spriteData.IDLE;
-      if (input[Fighter.KEYS.L_PUNCH]) {
-          newSprite = this.spriteData.L_PUNCH;
-      }
-      if (input[Fighter.KEYS.M_PUNCH]) {
-          newSprite = this.spriteData.M_PUNCH;
-      }
-      if (input[Fighter.KEYS.H_PUNCH]) {
-          newSprite = this.spriteData.H_PUNCH;
-      }
-      if (input[Fighter.KEYS.L_KICK]) {
-          newSprite = this.spriteData.L_KICK;
-      }
-      if (input[Fighter.KEYS.M_KICK]) {
-          newSprite = this.spriteData.M_KICK;
-      }
-      if (input[Fighter.KEYS.H_KICK]) {
-          newSprite = this.spriteData.H_KICK;
-      }
-      if (input[Fighter.KEYS.FORWARD]) {
-        this.state = Fighter.FORWARD;
-      }
-      if (input[Fighter.KEYS.BLOCK]) {
-        this.state = Fighter.BLOCKING;
-      }
-      if (input[Fighter.KEYS.CROUCH]) {
-        this.state = Fighter.CROUCHING;
-      }
-      break;
-    case Fighter.FORWARD :
-      if (input[Fighter.KEYS.FORWARD]) {
-        this.vel.x = 2;
-        newSprite = this.spriteData.WALKING;
-      } else {
-        this.state = Fighter.IDLE;
-      }
-      break;
-    case Fighter.BLOCKING :
-      if (input[Fighter.KEYS.BLOCK]) {
-        this.vel.x = 0;
-        newSprite = this.spriteData.BLOCK;
-      } else {
-        this.state = Fighter.IDLE;
-      }
-      break;
-    case Fighter.CROUCHING :
-      if (input[Fighter.KEYS.CROUCH]) {
-        this.vel.x = 0;
-        newSprite = this.spriteData.CROUCH;
-      } else {
-        this.state = Fighter.IDLE;
-      }
-      break;
-    default :
-      break;
+        if (this.spriteData[move.name]) {
+          newSprite = this.spriteData[move.name];
+        }
+        if (move.name === "FORWARD") {
+          this.state = Fighter.FORWARDS;
+        }
+        if (move.name === "BACKWARD") {
+          this.state = Fighter.BACKWARDS;
+        }
+        if (move.name === "CROUCH") {
+          this.state = Fighter.CROUCHING;
+        }
+        break;
+      case Fighter.FORWARDS :
+        if (move.name === "FORWARD") {
+          this.vel.x = 1;
+          newSprite = this.spriteData.WALKING;
+        } else if (move.name === "IDLE") {
+          this.state = Fighter.IDLE;
+        }
+        break;
+      case Fighter.BACKWARDS :
+        if (move.name === "BACKWARD") {
+          this.vel.x = -1;
+          newSprite = this.spriteData.WALKING;
+        } else if (move.name === "IDLE") {
+          this.state = Fighter.IDLE;
+        }
+        break;
+      case Fighter.CROUCHING :
+        if (move.name === "CROUCH") {
+          this.vel.x = 0;
+          newSprite = this.spriteData.CROUCH;
+        } else if (move.name === "IDLE") {
+          this.state = Fighter.IDLE;
+        } else {
+          if (this.spriteData[move.name]) {
+            newSprite = this.spriteData[move.name];
+          }
+        }
+        break;
+      default :
+        break;
+    }
   }
 
   if (newSprite != this.currentSprite) {
